@@ -12,20 +12,36 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+
 @Aspect
 @Slf4j
 @Component
 @Order(10)
 public class Advisor {
-    ThreadLocal<String> before = new ThreadLocal<>();
+    ThreadLocal<Stack<String>> before = new ThreadLocal<>();
 
-    @Around(value = "@annotation(withResource) && args(dataSourceName)")
+    @Pointcut(value = "@annotation(withResource) && args(sql,..)")
+    public void withDataSourceResource(WithResource withResource, String sql) { }
+
+//    @Around(value = "@annotation(withResource) && args(dataSourceName,..)")
+    @Around(value = "withDataSourceResource(withResource, dataSourceName)")
     public void doPrepareResource(ProceedingJoinPoint jp, WithResource withResource, String dataSourceName) throws Throwable {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         log.info("{}", signature);
         log.info("preppare resource");
         log.info("{}", withResource);
         log.info("{}", dataSourceName);
+        // get current datasource
+        // if current != dataSourceName
+        //     before.get().push(dataSourceName);
+        //     proceed
+        //     before.get().pop();
+        // else
+        //     proceed
+
 
         try {
             jp.proceed();

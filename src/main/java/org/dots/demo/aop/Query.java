@@ -9,7 +9,7 @@ public class Query {
 
     @WithResource
     @Transactional
-    public void doQuery(String dataSourceName) {
+    public void doQuery(String dataSourceName, String sql) {
         log.info("in the query");
         throw new RuntimeException("OOM");
     }

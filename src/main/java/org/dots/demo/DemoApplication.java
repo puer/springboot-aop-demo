@@ -25,7 +25,11 @@ public class DemoApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		log.info("Running");
-		query.doQuery("datasource picc");
+		try {
+			query.doQuery("datasource picc", "another");
+		} catch(Exception e) {
+			log.error("query failed : {}", e.getMessage());
+		}
 		query.doQuery2();
 	}
 }
