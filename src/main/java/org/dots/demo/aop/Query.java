@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class Query {
 
     @WithResource
+    @Transactional
     public void doQuery(String dataSourceName) {
         log.info("in the query");
         throw new RuntimeException("OOM");

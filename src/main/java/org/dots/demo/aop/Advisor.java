@@ -31,7 +31,7 @@ public class Advisor {
             jp.proceed();
         } catch (Throwable throwable) {
             log.info("got exception advisor?");
-//            throw throwable;
+            throw throwable;
         } finally {
             log.info("release resource");
         }
